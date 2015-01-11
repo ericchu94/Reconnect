@@ -1,5 +1,6 @@
 package net.ericchu.reconnect;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,6 +15,21 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Intent intent = new Intent(this, NetworkService.class);
+        startService(intent);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        Intent intent = new Intent(this, NetworkService.class);
+        stopService(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
