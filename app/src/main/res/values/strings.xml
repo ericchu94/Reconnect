@@ -4,5 +4,8 @@
     <string name="app_name">Reconnect</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="action_name">Name</string>
+    <string name="dialog_enter_name">Enter name</string>
+    <string name="dialog_name">Name</string>
 
 </resources>
