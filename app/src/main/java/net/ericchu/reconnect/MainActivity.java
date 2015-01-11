@@ -1,13 +1,30 @@
 package net.ericchu.reconnect;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
 public class MainActivity extends ActionBarActivity {
+    private static String LOG_TAG = "MainActivity";
+
+    private ServiceConnection mConn  = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            Log.v(LOG_TAG, "Service connected");
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            Log.v(LOG_TAG, "Service disconnected");
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +38,8 @@ public class MainActivity extends ActionBarActivity {
 
         Intent intent = new Intent(this, NetworkService.class);
         startService(intent);
+        // TODO research flags
+        bindService(intent, mConn, BIND_AUTO_CREATE);
     }
 
     @Override
@@ -28,6 +47,7 @@ public class MainActivity extends ActionBarActivity {
         super.onPause();
 
         Intent intent = new Intent(this, NetworkService.class);
+        unbindService(mConn);
         stopService(intent);
     }
 
